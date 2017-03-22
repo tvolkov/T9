@@ -24,3 +24,14 @@ def encodedWord = '228'
 Trie trie = new Trie()
 println trie.put('bat')
 
+
+TrieNode node =  trie.get('bat')
+println node.isReal
+println node.children
+
+node = trie.get('cat')
+println node?.isReal
+println node?.children
+
+assert trie.contains('bat')
+assert !trie.contains('cat')

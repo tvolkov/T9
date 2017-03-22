@@ -29,9 +29,14 @@ class Trie {
 
     def get(TrieNode node, String key, int index){
         char nodeKey = key.charAt(index)
-        if (key.length() == index)
+        if (index == key.length() - 1)
             return node
-        return get(node.children[nodeKey], key, index + 1)
+        if (!node) return null
+        return get(node?.children[nodeKey as int], key, index + 1)
+    }
+
+    def contains(String key){
+        return get(key) != null
     }
 }
 
