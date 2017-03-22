@@ -23,6 +23,8 @@ def encodedWord = '228'
 
 Trie trie = new Trie()
 println trie.put('bat')
+println trie.put('bash')
+println trie.put('bar')
 
 
 TrieNode node =  trie.get('bat')
@@ -35,3 +37,6 @@ println node?.children
 
 assert trie.contains('bat')
 assert !trie.contains('cat')
+
+def matchingKeys = trie.keysWithPrefix('ba')
+println matchingKeys

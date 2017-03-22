@@ -6,20 +6,19 @@ class Trie {
     }
 
     def put(String key, TrieNode node, int index){
+        if (index == key.length()){
+            if (node.isReal)
+                return false
+            node.isReal = true
+            return true
+        }
         char nodeKey = key.charAt(index)
         TrieNode child = node.children[nodeKey as int]
         if (!child){
             child = new TrieNode();
             node.children[nodeKey as int] = child
         }
-        if (index == key.length() - 1){
-            if (node.isReal)
-                return false
-            node.isReal = true
-            return true
-        } else {
-            return put(key, child, index + 1)
-        }
+        return put(key, child, index + 1)
 
     }
 
@@ -28,15 +27,34 @@ class Trie {
     }
 
     def get(TrieNode node, String key, int index){
-        char nodeKey = key.charAt(index)
-        if (index == key.length() - 1)
+        if (index == key.length())
             return node
         if (!node) return null
+        char nodeKey = key.charAt(index)
         return get(node?.children[nodeKey as int], key, index + 1)
     }
 
     def contains(String key){
         return get(key) != null
+    }
+
+    def keysWithPrefix(String prefix){
+        def results = []
+        TrieNode node = get(prefix)
+        collect(node, new StringBuilder(prefix), results)
+        return results
+    }
+
+    def collect(TrieNode node, StringBuilder prefix, def results){
+        if (!node) return
+        if (node.isReal) results << prefix.toString()
+        for (char nodeKey in 0..255){
+            if (node.children[nodeKey as int] != null) {
+                prefix.append(nodeKey)
+                collect(node.children[nodeKey as int], prefix, results)
+                prefix.deleteCharAt(prefix.length() - 1)
+            }
+        }
     }
 }
 
