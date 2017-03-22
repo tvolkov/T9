@@ -1,5 +1,6 @@
 class Trie {
     TrieNode root = new TrieNode()
+    int numberOfKeys = 0
 
     def put(String key){
         return put(key, root, 0)
@@ -10,6 +11,7 @@ class Trie {
             if (node.isReal)
                 return false
             node.isReal = true
+            numberOfKeys++
             return true
         }
         char nodeKey = key.charAt(index)
@@ -55,6 +57,10 @@ class Trie {
                 prefix.deleteCharAt(prefix.length() - 1)
             }
         }
+    }
+
+    int size(){
+        return numberOfKeys
     }
 }
 
