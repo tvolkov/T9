@@ -12,7 +12,7 @@ for (int i in 0..words.size() - 1){
     }
     wordsCodes[i] = code.toString()
 }
-
+println wordsCodes
 Trie<String> trie = new Trie<>()
 
 for (int i in 0..wordsCodes.size() - 1) {
@@ -21,7 +21,7 @@ for (int i in 0..wordsCodes.size() - 1) {
 
 def code = '228'
 
-println trie.get(code).data
+println trie.valuesWithPrefix(code)
 
 
 

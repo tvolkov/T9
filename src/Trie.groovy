@@ -8,8 +8,8 @@ class Trie<T> {
 
     def put(String key, T value, TrieNode node, int index){
         if (index == key.length()){
-            if (node.isReal)
-                return false
+//            if (node.isReal)
+//                return false
             node.isReal = true
             node.data.push(value)
             numberOfKeys++
@@ -55,6 +55,25 @@ class Trie<T> {
             if (node.children[nodeKey as int] != null) {
                 prefix.append(nodeKey)
                 collect(node.children[nodeKey as int], prefix, results)
+                prefix.deleteCharAt(prefix.length() - 1)
+            }
+        }
+    }
+
+    def valuesWithPrefix(String keyPrefix){
+        def results = []
+        TrieNode node = get(keyPrefix)
+        collectValues(node, new StringBuilder(keyPrefix), results)
+        return results
+    }
+
+    def collectValues(TrieNode node, StringBuilder prefix, def results){
+        if (!node) return
+        if (node.isReal) results << node.data
+        for (char nodeKey in 0..255){
+            if (node.children[nodeKey as int] != null){
+                prefix.append(nodeKey)
+                collectValues(node.children[nodeKey as int], prefix, results)
                 prefix.deleteCharAt(prefix.length() - 1)
             }
         }
