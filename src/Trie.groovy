@@ -1,16 +1,17 @@
-class Trie {
-    TrieNode root = new TrieNode()
+class Trie<T> {
+    TrieNode<T> root = new TrieNode<>()
     int numberOfKeys = 0
 
-    def put(String key){
-        return put(key, root, 0)
+    def put(String key, T value){
+        return put(key, value, root, 0)
     }
 
-    def put(String key, TrieNode node, int index){
+    def put(String key, T value, TrieNode node, int index){
         if (index == key.length()){
             if (node.isReal)
                 return false
             node.isReal = true
+            node.data.push(value)
             numberOfKeys++
             return true
         }
@@ -20,7 +21,7 @@ class Trie {
             child = new TrieNode();
             node.children[nodeKey as int] = child
         }
-        return put(key, child, index + 1)
+        return put(key, value, child, index + 1)
 
     }
 
@@ -64,7 +65,8 @@ class Trie {
     }
 }
 
-class TrieNode {
+class TrieNode<T> {
     boolean isReal
     TrieNode[] children = new TrieNode[256]
+    def data = []
 }
