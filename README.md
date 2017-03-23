@@ -1,3 +1,2 @@
 # T9
-
-A possible implementation of T9 keyboard. It uses trie to map word codes to the words
+A trie-based implementation of t9 input method
